@@ -1,5 +1,7 @@
 package com.app.learningcoroutine.thermometer
 
+import android.R.attr.end
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,10 +33,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.app.learningcoroutine.R
+import com.app.learningcoroutine.ui.theme.textDisabled
 
 
 @Preview(
@@ -53,7 +59,6 @@ fun TemperatureMonitorScreen(
 
     val firstList = viewModel.items.collectAsState().value
     var isCountReached by rememberSaveable { mutableStateOf(false) }
-    var isRunning by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(firstList.totalCount) {
         isCountReached = firstList.totalCount == 20
@@ -61,41 +66,54 @@ fun TemperatureMonitorScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface),
         contentAlignment = Alignment.Center
     ) {
         Card(
             modifier = Modifier
                 .wrapContentSize()
-                .padding(10.dp),
+                .padding(20.dp),
             colors = CardDefaults.cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
             )
         ) {
             Text(
-                text = "Temperature Monitor",
-                modifier = modifier.wrapContentSize(),
-                style = MaterialTheme.typography.headlineMedium
+                text = "Temperature Treck",
+                modifier = modifier
+                    .wrapContentSize()
+                    .padding(top = 10.dp, start = 10.dp, end = 10.dp),
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp,
+                    letterSpacing = 0.5.sp
+                )
             )
 
             Row(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp, top = 10.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.icon_check),
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = if(isCountReached) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.textDisabled,
                     modifier = modifier
                         .wrapContentSize()
                         .align(alignment = Alignment.CenterVertically),
                     contentDescription = null
                 )
                 Spacer(
-                    modifier = modifier.width(10.dp)
+                    modifier = modifier.width(5.dp)
                 )
                 Text(
                     text = "${firstList.totalCount} / 20",
-                    modifier = modifier.wrapContentSize(),
-                    style = MaterialTheme.typography.headlineSmall
+                    modifier = modifier
+                        .wrapContentSize(),
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
 
@@ -108,7 +126,8 @@ fun TemperatureMonitorScreen(
                     .align(Alignment.CenterHorizontally),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary
+                    containerColor = if(isCountReached) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.surface
                 ),
                 onClick = {
                     if (isCountReached) viewModel.clear()
@@ -117,8 +136,9 @@ fun TemperatureMonitorScreen(
             ) {
                 Text(
                     text = if (isCountReached) "Restart"
-                    else  "Tracking",
-                    color = MaterialTheme.colorScheme.surface
+                    else "Tracking...",
+                    color = if(isCountReached) MaterialTheme.colorScheme.surfaceContainerHigh
+                    else  MaterialTheme.colorScheme.textDisabled
                 )
             }
 
@@ -135,10 +155,14 @@ fun ColumnTemperature(tempData: List<Temperature>) {
     val second10 = tempData.drop(10).take(10)
 
     Row(
-        modifier = Modifier.wrapContentSize()
+        modifier = Modifier
+            .wrapContentSize()
+            .padding(start = 10.dp, end = 10.dp)
     ) {
         LazyColumn(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier
+                .padding(top = 10.dp, bottom = 10.dp)
+                .weight(1f)
         ) {
             items(first10) {
                 RowTemperature(temperature = it)
@@ -162,17 +186,20 @@ fun RowTemperature(
     temperature: Temperature,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp)
     ) {
         Icon(
-            imageVector = ImageVector.vectorResource(id = R.drawable.icon_check),
+            imageVector = ImageVector.vectorResource(id = R.drawable.icon_thermometer),
             tint = if (temperature.isEnabled) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.error,
+            else MaterialTheme.colorScheme.textDisabled,
             modifier = modifier
                 .wrapContentSize()
                 .align(alignment = Alignment.CenterVertically),
             contentDescription = null
         )
+        Spacer(modifier = modifier.width(5.dp))
         Text(
             text = temperature.tempValue,
             modifier = modifier

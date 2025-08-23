@@ -21,9 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.app.learningcoroutine.ui.theme.LearningCoroutineTheme
 
 @Preview()
@@ -61,14 +64,20 @@ fun LandingScreen(
                     .fillMaxWidth()
                     .padding(10.dp),
                 text = "Thermometer Treck",
+                style = TextStyle(
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp,
+                    letterSpacing = 0.5.sp
+                ),
                 textAlign = TextAlign.Center
             )
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(10.dp),
-                text = "Press start to to begin tracking temperature",
-                textAlign = TextAlign.Center
+                text = "Press start to begin tracking temperature",
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSecondary
             )
 
             Button(

@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.withIndex
 import kotlinx.coroutines.launch
-import kotlin.math.roundToLong
+import java.math.RoundingMode
 
 class TemperatureMonitorViewModel : ViewModel() {
 
@@ -115,8 +115,12 @@ class TemperatureMonitorViewModel : ViewModel() {
             .onEach { delay(250) }
             .withIndex()
             .collect { (index, value) ->
-                val convert = (value * 9 / 5) + 32
-                emit(index to "$convert F")
+                val fahrenheit = (value * 9 / 5) + 32
+                val roundedFahrenheit = fahrenheit
+                    .toBigDecimal()
+                    .setScale(2, RoundingMode.HALF_UP)
+                    .toDouble()
+                emit(index to "$roundedFahrenheit °F")
             }
     }
 
