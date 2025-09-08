@@ -6,6 +6,7 @@ import android.util.Log.i
 import androidx.compose.ui.input.key.Key.Companion.F
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.flow.withIndex
 import kotlinx.coroutines.launch
 import java.math.RoundingMode
+import java.util.stream.Collectors.toList
 
 class TemperatureMonitorViewModel : ViewModel() {
 

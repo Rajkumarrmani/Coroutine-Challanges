@@ -17,6 +17,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.app.learningcoroutine.navigation.Destination
+import com.app.learningcoroutine.queue.OrderPage
 import com.app.learningcoroutine.thermometer.LandingScreen
 import com.app.learningcoroutine.thermometer.TemperatureMonitorScreen
 import com.app.learningcoroutine.ui.theme.LearningCoroutineTheme
@@ -33,7 +34,11 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
 
-                    NavDisplay(
+                    OrderPage(
+                        modifier = Modifier.padding(innerPadding)
+                    )
+
+                 /*   NavDisplay(
                         backStack = backStack,
                         modifier = Modifier
                             .fillMaxSize()
@@ -50,7 +55,7 @@ class MainActivity : ComponentActivity() {
                                 TemperatureMonitorScreen()
                             }
                         }
-                    )
+                    )*/
                 }
             }
         }
