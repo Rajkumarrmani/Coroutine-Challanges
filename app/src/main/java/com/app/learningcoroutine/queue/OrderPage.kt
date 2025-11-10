@@ -379,65 +379,6 @@ fun SegmentedLinearProgressBar(
             )
         }
     }
-
-
-    /*  Row(
-          modifier = modifier
-              .fillMaxWidth()
-              .padding(20.dp),
-          horizontalArrangement = Arrangement.spacedBy(gapWidth)
-      ) {
-          repeat(segments) { index ->
-              // Calculate the progress range for the current segment.
-              // `segmentStartProgress` is the progress value where this segment begins.
-              // `segmentEndProgress` is the progress value where this segment ends.
-              val segmentStartProgress = index.toFloat() / segments.toFloat()
-              val segmentEndProgress = (index + 1).toFloat() / segments.toFloat()
-              // Determine if the current segment should be considered active based on the overall progress.
-              val isSegmentActive = progress >= segmentStartProgress
-              val isSegmentFullyActive = progress >= segmentEndProgress
-
-              Box(
-                  modifier = Modifier
-                      .weight(1f)
-                      .height(8.dp)
-                      .clip(RoundedCornerShape(50))
-                      .background(
-                          if (segments == MAX_SEGMENTS) {
-                              MaterialTheme.colorScheme.OverLoaded.copy(alpha = 0.3f)
-                          } else {
-                              inactiveColor
-                          }
-                      )
-              ) {
-                  if (isSegmentActive) {
-                      // If the segment is active, calculate how much of this segment should be filled.
-                      // `filledRatio` is a value between 0.0 and 1.0 representing the filled portion of this segment.
-                      // `coerceIn(0f, 1f)` ensures the ratio stays within the valid range.
-                      val filledRatio = if (isSegmentFullyActive) {
-                          1f
-                      } else {
-                          ((progress - segmentStartProgress) / (segmentEndProgress - segmentStartProgress)).coerceIn(
-                                  0f,
-                                  1f
-                              )
-                      }
-                      // An inner Box is used to draw the filled portion of the segment.
-                      // `Modifier.fillMaxWidth(filledRatio)` sets the width of this inner Box based on the `filledRatio`.
-                      Box(
-                          modifier = Modifier
-                              .fillMaxHeight()
-                              .fillMaxWidth(filledRatio)
-                              .background(
-                                  if (segments == MAX_SEGMENTS) {
-                                      MaterialTheme.colorScheme.OverLoaded
-                                  } else activeColor)
-                              .clip(RoundedCornerShape(50))
-                      )
-                  }
-              }
-          }
-      }*/
 }
 
 @Preview()

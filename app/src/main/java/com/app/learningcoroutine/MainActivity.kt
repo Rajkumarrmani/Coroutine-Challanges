@@ -16,6 +16,7 @@ import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
+import com.app.learningcoroutine.heartbeat.HeartBeatScreen
 import com.app.learningcoroutine.navigation.Destination
 import com.app.learningcoroutine.queue.OrderPage
 import com.app.learningcoroutine.thermometer.LandingScreen
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
 
 
-                    OrderPage(
+                    HeartBeatScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
 
